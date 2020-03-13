@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from amort import amoritization 
+from amort import amoritization, loanNpv
 from graphics import plotAmoritization
 
 #===========================================================
@@ -11,7 +11,8 @@ from graphics import plotAmoritization
 loanAmt=329657.27
 # Standard Payments
 house0 = amoritization(loan=loanAmt, APR=.03875, payment=1583.02)
-
+houseNPV = loanNpv(loanAmt, 0.03875, house0)
+import ipdb; ipdb.set_trace()
 ax = plotAmoritization(house0, fmt='k<')
 
 # Extra 600 per month
@@ -50,7 +51,6 @@ house600B = amoritization(loan=remainingPrincipal, APR=.03875, payment=1583.02+6
 
 biggestLoanCost = house600.interestPaid.sum() + student0.interestPaid.sum()
 biggestAPRCost  = student600.interestPaid.sum()+house0B.interestPaid.sum()+house600B.interestPaid.sum() 
-
 
 
 # Interest saved house

@@ -66,3 +66,26 @@ def amoritization(loan, APR, payment, referenceDate=None):
     amoritizationTable = pd.DataFrame.from_records(results, index=['time'])
     return amoritizationTable
 
+
+def loanNpv(loanAmt, APR, loan):
+    '''
+    Gives the NPV of the loan given loan amount and amoritization schedule
+    Parameters
+    ----------
+    loanAmt: float
+        Original loan amount
+    loan: DataFrame
+        AMoritizaion schedule 
+    Returns
+    -------
+    NPV: Float
+        Net present value
+    '''
+    # Calculate the cash flows (monthly payment) 
+    pmt = -(loan.interest + loan.principal).values
+    # Set time 0 to inflow of loanAmount
+    pmt[0] = loanAmt
+    # Calculate NPV
+    NPV = np.npv(APR, pmt)
+    return NPV
+
